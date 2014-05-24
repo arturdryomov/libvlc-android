@@ -19,6 +19,7 @@ Instructions below are for OS X and Homebrew.
 
   ```
   $ export ANDROID_HOME="/usr/local/opt/android-sdk"
+  $ export PATH=$PATH:${ANDROID_SDK}/tools
 
   $ export ANDROID_SDK="/usr/local/opt/android-sdk"
   $ export ANDROID_NDK="/usr/local/opt/android-ndk"
