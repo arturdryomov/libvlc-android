@@ -23,8 +23,10 @@ android {
     }
 }
 
-task cloneSdk(type: Exec) << {
-    commandLine "git", "clone", "git://git.videolan.org/vlc-ports/android.git", "vlc-android"
+task cloneSdk << {
+    exec {
+        commandLine "git", "clone", "git://git.videolan.org/vlc-ports/android.git", "vlc-android"
+    }
 }
 
 cloneSdk.onlyIf {
