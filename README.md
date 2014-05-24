@@ -32,10 +32,16 @@ Instructions below are for OS X and Homebrew.
   $ gradle assembleRelease
   ```
 
-4. Deploy to Maven Local if you wish.
+4. Deploy to Maven Local.
 
   ```
   $ gradle uploadArchives
+  ```
+
+  The dependendency is
+  
+  ```groovy
+  compile "org.videolan:libvlc:0.9.+"
   ```
 
 ## Information
