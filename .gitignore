@@ -1,0 +1,8 @@
+# VLC source
+
+vlc-android/
+
+# Built SDK
+
+src/main/java/
+src/main/jniLibs/

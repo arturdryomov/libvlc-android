@@ -1,0 +1,75 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:0.10.+"
+        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.10.+"
+    }
+}
+
+apply plugin: "android-sdk-manager"
+apply plugin: "android-library"
+apply plugin: "maven"
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+    }
+}
+
+task cloneSdk(type: Exec) << {
+    commandLine "git", "clone", "git://git.videolan.org/vlc-ports/android.git", "vlc-android"
+}
+
+cloneSdk.onlyIf {
+    !file("vlc-android").exists()
+}
+
+task compileSdk(dependsOn: cloneSdk) << {
+    exec {
+        workingDir file("vlc-android")
+        commandLine "sh", "compile.sh", "release"
+    }
+    exec {
+        workingDir file("vlc-android")
+        commandLine "make", ".sdk"
+    }
+}
+
+task buildSdk(dependsOn: compileSdk) << {
+    copy {
+        from "vlc-android/vlc-android/libs"
+        into "src/main/jniLibs"
+    }
+    copy {
+        from "vlc-android/vlc-android/src/org/videolan/libvlc"
+        into "src/main/java/org/videolan/libvlc"
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: String.format("file://%s", mavenLocalPath())
+
+            pom {
+                groupId = "org.videolan"
+                artifactId = "libvlc"
+                version = "0.9.3"
+            }
+        }
+    }
+}
+
+def mavenLocalPath() {
+    def homePath = System.getProperty("user.home")
+    def mavenPath = new File(".m2", "repository").path
+
+    return new File(homePath, mavenPath).absolutePath
+}
