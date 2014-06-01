@@ -36,7 +36,15 @@ cloneSdk.onlyIf {
 task compileSdk(dependsOn: cloneSdk) << {
     exec {
         workingDir file("vlc-android")
-        commandLine "sh", "compile.sh", "release"
+        commandLine "sh", "compile.sh", "--fetch"
+    }
+    exec {
+        workingDir file("vlc-android/vlc")
+        commandLine "git", "apply", "--index", file("patch/always-read-avi-index.patch").path
+    }
+    exec {
+        workingDir file("vlc-android")
+        commandLine "sh", "compile.sh", "--build", "release"
     }
     exec {
         workingDir file("vlc-android")
@@ -71,7 +79,7 @@ uploadArchives {
 
 def mavenLocalPath() {
     def homePath = System.getProperty("user.home")
-    def mavenPath = new File(".m2", "repository").path
+    def mavenPath = ".m2/repository"
 
     return new File(homePath, mavenPath).absolutePath
 }
