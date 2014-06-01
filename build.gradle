@@ -27,6 +27,10 @@ task cloneSdk << {
     exec {
         commandLine "git", "clone", "git://git.videolan.org/vlc-ports/android.git", "vlc-android"
     }
+    exec {
+        workingDir file("vlc-android")
+        commandLine "git", "checkout", String.format("tags/%s", mavenProperty("version"))
+    }
 }
 
 cloneSdk.onlyIf {
@@ -69,9 +73,9 @@ uploadArchives {
             repository url: String.format("file://%s", mavenLocalPath())
 
             pom {
-                groupId = "org.videolan"
-                artifactId = "libvlc"
-                version = "0.9.3"
+                groupId = mavenProperty("group")
+                artifactId = mavenProperty("artifact")
+                version = mavenProperty("version")
             }
         }
     }
@@ -82,4 +86,13 @@ def mavenLocalPath() {
     def mavenPath = ".m2/repository"
 
     return new File(homePath, mavenPath).absolutePath
+}
+
+def mavenProperty(property) {
+    def mavenFile = file("maven.properties")
+    def mavenProperties = new Properties()
+
+    mavenProperties.load(mavenFile.newInputStream())
+
+    return mavenProperties[property]
 }
