@@ -42,7 +42,7 @@ Instructions below are for OS X and Homebrew.
   The dependendency is
   
   ```groovy
-  compile "org.videolan:libvlc:0.9.+"
+  compile "org.videolan:libvlc:0.9.4"
   ```
 
 ## Information
