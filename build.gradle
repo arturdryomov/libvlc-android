@@ -4,8 +4,8 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:0.10.+"
-        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.10.+"
+        classpath "com.android.tools.build:gradle:0.12.+"
+        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.+"
     }
 }
 
@@ -15,7 +15,7 @@ apply plugin: "maven"
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.1"
+    buildToolsVersion "20"
 
     defaultConfig {
         minSdkVersion 14
