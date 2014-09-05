@@ -96,3 +96,9 @@ def mavenProperty(property) {
 
     return mavenProperties[property]
 }
+
+task generateWrapper(type: Wrapper) {
+    description "Generates Gradle wrapper."
+
+    gradleVersion = "1.12"
+}

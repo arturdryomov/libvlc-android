@@ -4,7 +4,7 @@ This repository contains the Gradle configuration for building LibVLC as an AAR 
 
 ## Building
 
-You will need JDK 1.6, Gradle 1.12 and Ant installed.
+You will need JDK 1.6+ and Ant installed.
 
 Instructions below are for OS X and Homebrew.
 
@@ -29,8 +29,8 @@ Instructions below are for OS X and Homebrew.
 3. Build the SDK.
 
   ```
-  $ gradle buildSdk
-  $ gradle assembleRelease
+  $ ./gradlew buildSdk
+  $ ./gradlew assembleRelease
   ```
 
 4. Deploy to Maven Local.
