@@ -15,14 +15,16 @@ Instructions below are for OS X and Homebrew.
   $ brew install android-ndk
   ```
 
-2. Set environment.
+2. Set the environment.
 
   ```
-  $ export ANDROID_HOME="/usr/local/opt/android-sdk"
-  $ export PATH=$PATH:${ANDROID_HOME}/tools
+  $ export BREW_HOME="$(brew --prefix)"
 
-  $ export ANDROID_SDK="/usr/local/opt/android-sdk"
-  $ export ANDROID_NDK="/usr/local/opt/android-ndk"
+  $ export ANDROID_HOME="${BREW_HOME}/opt/android-sdk"
+  $ export PATH="$PATH:${ANDROID_HOME}/tools"
+
+  $ export ANDROID_SDK="${BREW_HOME}/opt/android-sdk"
+  $ export ANDROID_NDK="${BREW_HOME}/opt/android-ndk"
   $ export ANDROID_ABI="armeabi-v7a"
   ```
 
@@ -40,7 +42,7 @@ Instructions below are for OS X and Homebrew.
   ```
 
   The dependendency is
-  
+
   ```groovy
   compile "org.videolan:libvlc:0.9.7.1"
   ```
@@ -48,3 +50,4 @@ Instructions below are for OS X and Homebrew.
 ## Information
 
 * [Android Compile](https://wiki.videolan.org/AndroidCompile) — official documentation.
+* [Android Port](http://git.videolan.org/?p=vlc-ports/android.git) — official source code.
