@@ -38,7 +38,7 @@ Instructions below are for OS X and Homebrew.
 4. Deploy to Maven Local.
 
   ```
-  $ gradle uploadArchives
+  $ ./gradlew uploadArchives
   ```
 
   The dependendency is
@@ -50,4 +50,4 @@ Instructions below are for OS X and Homebrew.
 ## Information
 
 * [Android Compile](https://wiki.videolan.org/AndroidCompile) — official documentation.
-* [Android Port](http://git.videolan.org/?p=vlc-ports/android.git) — official source code.
+* [Android Port](https://git.videolan.org/?p=vlc-ports/android.git) — official source code.
