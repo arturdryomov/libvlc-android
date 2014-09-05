@@ -29,7 +29,7 @@ task cloneSdk << {
     }
     exec {
         workingDir file("vlc-android")
-        commandLine "git", "checkout", String.format("tags/%s", mavenProperty("version"))
+        commandLine "git", "checkout", "--quiet", String.format("tags/%s", mavenProperty("version"))
     }
 }
 
