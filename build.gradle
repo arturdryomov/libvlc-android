@@ -29,41 +29,41 @@ task cloneSdk << {
     }
     exec {
         workingDir file("vlc-android")
-        commandLine "git", "checkout", "--quiet", String.format("tags/%s", mavenProperty("version"))
+        commandLine "git", "checkout", readSdkProperty("version.vlc.android")
     }
-}
-
-cloneSdk.onlyIf {
-    !file("vlc-android").exists()
-}
-
-task compileSdk(dependsOn: cloneSdk) << {
     exec {
         workingDir file("vlc-android")
-        commandLine "sh", "compile.sh", "--fetch"
+        commandLine "git", "clone", "git://git.videolan.org/vlc.git", "vlc"
+    }
+    exec {
+        workingDir file("vlc-android/vlc")
+        commandLine "git", "checkout", readSdkProperty("version.vlc")
     }
     exec {
         workingDir file("vlc-android/vlc")
         commandLine "git", "apply", "--index", file("patch/always-read-avi-index.patch").path
     }
+}
+
+cloneSdk.onlyIf {
+    !file("vlc-android").exists() && !file("vlc-android/vlc").exists()
+}
+
+task compileSdk(dependsOn: cloneSdk) << {
     exec {
         workingDir file("vlc-android")
-        commandLine "sh", "compile.sh", "--build", "release"
-    }
-    exec {
-        workingDir file("vlc-android")
-        commandLine "make", ".sdk"
+        commandLine "sh", "compile-libvlc.sh", "--release"
     }
 }
 
 task buildSdk(dependsOn: compileSdk) << {
     copy {
-        from "vlc-android/vlc-android/libs"
+        from "vlc-android/libvlc/jni/libs"
         into "src/main/jniLibs"
     }
     copy {
-        from "vlc-android/vlc-android/src/org/videolan/libvlc"
-        into "src/main/java/org/videolan/libvlc"
+        from "vlc-android/libvlc/src/"
+        into "src/main/java/"
     }
 }
 
@@ -73,9 +73,9 @@ uploadArchives {
             repository url: String.format("file://%s", mavenLocalPath())
 
             pom {
-                groupId = mavenProperty("group")
-                artifactId = mavenProperty("artifact")
-                version = mavenProperty("version")
+                groupId = readMavenProperty("group")
+                artifactId = readMavenProperty("artifact")
+                version = readMavenProperty("version")
             }
         }
     }
@@ -88,13 +88,21 @@ def mavenLocalPath() {
     return new File(homePath, mavenPath).absolutePath
 }
 
-def mavenProperty(property) {
-    def mavenFile = file("maven.properties")
-    def mavenProperties = new Properties()
+def readMavenProperty(property) {
+    return readProperty("maven.properties", property)
+}
 
-    mavenProperties.load(mavenFile.newInputStream())
+def readSdkProperty(property) {
+    return readProperty("sdk.properties", property)
+}
 
-    return mavenProperties[property]
+def readProperty(propertiesFileName, property) {
+    def propertiesFile = file(propertiesFileName)
+    def properties = new Properties()
+
+    properties.load(propertiesFile.newInputStream())
+
+    return properties[property]
 }
 
 task generateWrapper(type: Wrapper) {
