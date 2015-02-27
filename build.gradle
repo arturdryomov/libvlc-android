@@ -4,8 +4,8 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:0.12.+"
-        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.+"
+        classpath "com.android.tools.build:gradle:1.1.2"
+        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.0"
     }
 }
 
@@ -14,12 +14,12 @@ apply plugin: "android-library"
 apply plugin: "maven"
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 }
 
@@ -100,5 +100,5 @@ def mavenProperty(property) {
 task generateWrapper(type: Wrapper) {
     description "Generates Gradle wrapper."
 
-    gradleVersion = "1.12"
+    gradleVersion = "2.3"
 }
