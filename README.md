@@ -4,7 +4,7 @@ This repository contains the Gradle configuration for building LibVLC as an AAR 
 
 ## Building
 
-You will need JDK 1.6+ and Ant installed.
+You will need JDK 1.7+ installed.
 
 Instructions below are for OS X and Homebrew.
 
@@ -19,9 +19,6 @@ Instructions below are for OS X and Homebrew.
 
   ```
   $ export BREW_HOME="$(brew --prefix)"
-
-  $ export ANDROID_HOME="${BREW_HOME}/opt/android-sdk"
-  $ export PATH="$PATH:${ANDROID_HOME}/tools"
 
   $ export ANDROID_SDK="${BREW_HOME}/opt/android-sdk"
   $ export ANDROID_NDK="${BREW_HOME}/opt/android-ndk"
@@ -44,7 +41,7 @@ Instructions below are for OS X and Homebrew.
   The dependendency is
 
   ```groovy
-  compile "org.videolan:libvlc:0.9.9"
+  compile "org.videolan:libvlc:1.1.0"
   ```
 
 ## Information
