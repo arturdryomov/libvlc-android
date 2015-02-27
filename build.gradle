@@ -62,30 +62,9 @@ task buildSdk(dependsOn: compileSdk) << {
         into "src/main/jniLibs"
     }
     copy {
-        from "vlc-android/libvlc/src/"
-        into "src/main/java/"
+        from "vlc-android/libvlc/src"
+        into "src/main/java"
     }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository url: String.format("file://%s", mavenLocalPath())
-
-            pom {
-                groupId = readMavenProperty("group")
-                artifactId = readMavenProperty("artifact")
-                version = readMavenProperty("version")
-            }
-        }
-    }
-}
-
-def mavenLocalPath() {
-    def homePath = System.getProperty("user.home")
-    def mavenPath = ".m2/repository"
-
-    return new File(homePath, mavenPath).absolutePath
 }
 
 def readMavenProperty(property) {
@@ -103,6 +82,27 @@ def readProperty(propertiesFileName, property) {
     properties.load(propertiesFile.newInputStream())
 
     return properties[property]
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${mavenLocalPath()}"
+
+            pom {
+                groupId = readMavenProperty("pom.group")
+                artifactId = readMavenProperty("pom.artifact")
+                version = readMavenProperty("pom.version")
+            }
+        }
+    }
+}
+
+def mavenLocalPath() {
+    def homePath = System.getProperty("user.home")
+    def mavenPath = ".m2/repository"
+
+    return new File(homePath, mavenPath).absolutePath
 }
 
 task generateWrapper(type: Wrapper) {
