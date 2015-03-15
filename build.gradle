@@ -67,23 +67,6 @@ task buildSdk(dependsOn: compileSdk) << {
     }
 }
 
-def readMavenProperty(property) {
-    return readProperty("maven.properties", property)
-}
-
-def readSdkProperty(property) {
-    return readProperty("sdk.properties", property)
-}
-
-def readProperty(propertiesFileName, property) {
-    def propertiesFile = file(propertiesFileName)
-    def properties = new Properties()
-
-    properties.load(propertiesFile.newInputStream())
-
-    return properties[property]
-}
-
 uploadArchives {
     repositories {
         mavenDeployer {
@@ -96,6 +79,23 @@ uploadArchives {
             }
         }
     }
+}
+
+def readSdkProperty(property) {
+    return readProperty("sdk.properties", property)
+}
+
+def readMavenProperty(property) {
+    return readProperty("maven.properties", property)
+}
+
+def readProperty(propertiesFileName, property) {
+    def propertiesFile = file(propertiesFileName)
+    def properties = new Properties()
+
+    properties.load(propertiesFile.newInputStream())
+
+    return properties[property]
 }
 
 def mavenLocalPath() {
