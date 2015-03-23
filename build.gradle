@@ -67,6 +67,10 @@ task buildSdk(dependsOn: compileSdk) << {
     }
 }
 
+task cleanSdk << {
+    file("vlc-android").deleteDir()
+}
+
 uploadArchives {
     repositories {
         mavenDeployer {
