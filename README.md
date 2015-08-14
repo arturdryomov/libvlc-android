@@ -41,7 +41,7 @@ Instructions below are for OS X and Homebrew.
   The dependendency is
 
   ```groovy
-  compile "org.videolan:libvlc:1.3.0"
+  compile "org.videolan:libvlc:1.5.1"
   ```
 
 ## Information
